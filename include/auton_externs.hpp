@@ -1,0 +1,32 @@
+#pragma once
+
+#include "pros/adi.h"
+#include "pros/motor_group.hpp"
+#include "pros/rotation.hpp"
+#include "pros/imu.h"
+#include "lemlib/chassis/chassis.hpp"
+#include "robot_states.hpp" // for scoring, matchload, descore, etc.
+#include "pros/distance.hpp"
+
+// externs for global hardware and objects defined in `src/main.cpp`
+extern pros::Controller master;
+extern pros::MotorGroup intake_mg;
+extern pros::MotorGroup scoring_mg;
+extern pros::MotorGroup left_mg;
+extern pros::MotorGroup right_mg;
+extern pros::adi::Pneumatics midgoal;
+extern pros::adi::Pneumatics matchloader;
+extern pros::adi::Pneumatics wings;
+extern pros::adi::Pneumatics lowgoal;
+extern pros::adi::Pneumatics midgoal_descore;
+extern pros::Rotation vertical_encoder;
+extern lemlib::Drivetrain drivetrain;
+extern pros::Imu imu;
+extern lemlib::TrackingWheel vertical_tracking_wheel;
+extern lemlib::OdomSensors sensors;
+extern pros::Distance distBack;
+extern pros::Distance distLeft;
+extern pros::Distance distRight;
+extern lemlib::ControllerSettings lateral_controller;
+extern lemlib::ControllerSettings angular_controller;
+extern lemlib::Chassis chassis;

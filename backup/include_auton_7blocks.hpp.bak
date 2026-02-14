@@ -1,0 +1,50 @@
+```cpp
+#pragma once
+#include "auton_externs.hpp"
+#include "odomreset_fixed.hpp"
+#include "robot_states.hpp"
+// 7-block autonomous routines
+inline void left7blocks(){
+	chassis.setPose(-46.677,14.462,90);
+	scoring(Scoring::HOARD);
+	chassis.turnToHeading(75, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	chassis.moveToPoint(-16.5,24.5,1400,{.maxSpeed=50},false);
+	matchload(Matchload::EXTEND);
+	chassis.turnToHeading(315,800,{.maxSpeed=100},false);
+	chassis.moveToPoint(-40.447,45.404,2000,{.maxSpeed=120,.minSpeed=10},false);
+	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	onMatchLoadReset(true,true);
+	chassis.moveToPoint(-62.926,47.404,1550,{.forwards=true,.maxSpeed=60},false);
+	onMatchLoadReset(true,true);
+	chassis.moveToPoint(-21.183,46.004,1500,{.forwards=false,.maxSpeed=60},false);
+	scoring(Scoring::LONG_GOAL);
+	pros::delay(2200);
+	onMatchLoadReset(true,true);
+	chassis.moveToPoint(-34.183,35.404,700,{.forwards=true,.maxSpeed=120,.minSpeed=20},false);
+	matchload(Matchload::RETRACT);
+	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	chassis.moveToPoint(-10.101, 35.404, 1000,{.forwards=false,.maxSpeed=60},false);
+}
+
+inline void right7blocks(){
+	chassis.setPose(-46.677,-14.462,90);
+	scoring(Scoring::HOARD);
+	chassis.turnToHeading(115, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	chassis.moveToPoint(-17.5,-25.5,2000,{.maxSpeed=50},false);
+	matchload(Matchload::EXTEND);
+	chassis.turnToHeading(225,800,{.maxSpeed=100},false);
+	chassis.moveToPoint(-35.447,-47.404,2000,{.maxSpeed=120,.minSpeed=50},false);
+	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	onMatchLoadReset(false,false);
+	chassis.moveToPoint(-62.926,-46.404,1650,{.forwards=true,.maxSpeed=60,.minSpeed=50},false);
+	onMatchLoadReset(false,false);
+	chassis.moveToPoint(-21.183,-46.404,1500,{.forwards=false,.maxSpeed=60,.minSpeed=50},false);
+	scoring(Scoring::LONG_GOAL);
+	pros::delay(2200);
+	chassis.moveToPoint(-34.183,-60.404,500,{.forwards=true,.maxSpeed=120,.minSpeed=50},false);
+	matchload(Matchload::RETRACT);
+	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	chassis.moveToPoint(-10.101, -60.404, 1000,{.forwards=false,.maxSpeed=60,.minSpeed=50},false);
+}
+
+```
