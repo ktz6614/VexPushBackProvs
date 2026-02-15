@@ -84,7 +84,7 @@ void on_center_button() {
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 pros::MotorGroup intake_mg({7});    // Creates a motor group with forwards ports 1 & 3 and reversed port 2
 pros::MotorGroup scoring_mg({8});
-pros::MotorGroup left_mg({-13, -2,-3});  //3 Creates a motor group with forwards ports 4 & 5
+pros::MotorGroup left_mg({-13, -2,-14});  //3 Creates a motor group with forwards ports 4 & 5
 pros::MotorGroup right_mg({17, 16,19}); //21 Creates a motor group with
 pros::adi::Pneumatics midgoal('H', false);
 pros::adi::Pneumatics matchloader('D',false);
@@ -98,7 +98,6 @@ pros::Imu imu(11);
 pros::Distance distLeft(10);
 pros::Distance distRight(9);
 pros::Distance distMatchload(18);
-pros::Distance distFront(15);
 
 void initialize() {
 	pros::lcd::initialize();
