@@ -3,7 +3,7 @@
 #include "robot_states.hpp"
 ASSET(leftgetblocksmidgoal_txt);
 // Left mid-goal & Right low-goal combined
-inline void leftmidgoalandlong(){
+void leftmidgoalandlong(){
 	chassis.setPose(-48.79,16.099,0);
 	matchload(Matchload::EXTEND);
 	chassis.moveToPoint(-45.842, 45.004,1000,{.forwards=true,.maxSpeed=70,.minSpeed=20},false);
@@ -31,7 +31,7 @@ inline void leftmidgoalandlong(){
 	chassis.moveToPoint(-15.101, 28.404, 1000,{.forwards=false,.maxSpeed=60,.minSpeed=50},false);
 }
 
-inline void rightlowgoalandlong(){
+void rightlowgoalandlong(){
 	chassis.setPose(-48.79,-16.099,180);
 	matchload(Matchload::EXTEND);
 	chassis.moveToPoint(-45.842, -45.004,1000,{.forwards=true,.maxSpeed=70,.minSpeed=20},false);

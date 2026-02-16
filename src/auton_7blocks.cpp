@@ -6,7 +6,7 @@ extern pros::Distance distRight;
 extern pros::Controller master;
 
 // 7-block autonomous routines
-inline void left7blocks(){
+void left7blocks(){
 	chassis.setPose(-46.677,14.462,90);
 	scoring(Scoring::HOARD);
 	chassis.turnToHeading(75, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
@@ -29,7 +29,7 @@ inline void left7blocks(){
 	chassis.moveToPoint(-10.101, 36.404, 1000,{.forwards=false,.maxSpeed=60},false);
 }
 
-inline void right7blocks(){
+void right7blocks(){
 	chassis.setPose(-46.677,-14.462,90);
 	scoring(Scoring::HOARD);
 	chassis.turnToHeading(115, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);

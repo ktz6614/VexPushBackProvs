@@ -2,12 +2,12 @@
 #include "odomreset_fixed.hpp"
 #include "robot_states.hpp"
 // Miscellaneous autonomous routines (sawp, snacky)
-inline void leftsnackyahh(){
+void leftsnackyahh(){
 	chassis.setPose(-48.79,16.099,0);
 	chassis.moveToPoint(-48.842, 20.004,500,{.forwards=true,.maxSpeed=70,.minSpeed=20},false);
 }
 
-inline void rightsawp(){
+void rightsawp(){
 	chassis.setPose(-48.79,-16.099,180);
 	matchload(Matchload::EXTEND);
 	scoring(Scoring::HOARD);

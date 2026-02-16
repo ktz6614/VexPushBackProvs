@@ -19,8 +19,8 @@
 #include "lemlib.hpp"
 #include "odomreset_fixed.hpp"
 #define ENABLE_SKILLS_MACRO 0
-#define ENABLE_AUTON_SELCTOR 0
-#define TEST 1
+#define ENABLE_AUTON_SELCTOR 1
+#define TEST 0
 enum Auton {
     SKILLS,
     LEFT_9BLOCKS,

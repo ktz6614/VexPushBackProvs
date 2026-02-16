@@ -2,7 +2,7 @@
 #include "odomreset_fixed.hpp"
 #include "robot_states.hpp"
 // 9-block autonomous routines
-inline void left9blocks(){
+void left9blocks(){
 	chassis.setPose(-46.677,14.462,90);
 	scoring(Scoring::HOARD);
 	chassis.turnToHeading(70, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},true);
@@ -30,7 +30,7 @@ inline void left9blocks(){
 	chassis.moveToPoint(-10.101, 35.404, 1000,{.forwards=false,.maxSpeed=60,.minSpeed=50},false);
 }
 
-inline void right9blocks(){
+void right9blocks(){
 	chassis.setPose(-46.677,-14.462,90);
 	scoring(Scoring::HOARD);
 	descore(Descore::WINGS_EXTEND);
