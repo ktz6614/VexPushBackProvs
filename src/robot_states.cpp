@@ -137,7 +137,7 @@ static void antijam_check() {
     if (intake_mg.get_power() < 0.05) {  // Threshold: 2A (adjust as needed)
         // Reverse intake briefly to clear jam
         intake_mg.move(-127);
-        pros::delay(20);
+        pros::delay(50);
         intake_mg.move(127);  // Reverse for 200ms
         // Resume normal operation (caller should set back to desired speed)
     }

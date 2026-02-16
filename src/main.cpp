@@ -463,7 +463,7 @@ void opcontrol() {
 
 		}else if(master.get_digital(DIGITAL_UP)){
 			chassis.setPose(-21.183,46.004,270);
-			chassis.moveToPoint(-28.183,35.404,700,{.forwards=true,.maxSpeed=120,.minSpeed=20},false);
+			chassis.moveToPoint(-28.183,35.404,800,{.forwards=true,.maxSpeed=120,.minSpeed=20},false);
 			chassis.turnToHeading(270, 200,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 			chassis.moveToPoint(-10.101, 35.404, 500,{.forwards=false,.maxSpeed=60},false);
 		} else {
