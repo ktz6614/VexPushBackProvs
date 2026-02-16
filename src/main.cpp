@@ -18,7 +18,7 @@
 #include "skills.hpp"
 #include "lemlib.hpp"
 #include "odomreset_fixed.hpp"
-#define ENABLE_SKILLS_MACRO 0
+#define ENABLE_SKILLS_MACRO 1
 #define ENABLE_AUTON_SELCTOR 1
 #define TEST 0
 enum Auton {
@@ -246,7 +246,7 @@ void autonomous() {
 	right_mg.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 	pros::Task displaytask(displayposition);
 	#if TEST
-	skills();
+	right7blocks();
 	#endif
  	#if ENABLE_AUTON_SELCTOR
 	switch(selected_auton){
@@ -318,17 +318,18 @@ void gotoscoreloader1(){
 	chassis.moveToPoint(42.183,46.504,2500,{.forwards=false,.maxSpeed=100,.minSpeed=5},false);
 	chassis.turnToHeading(90, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	resetposition(true,true,true);
-	chassis.moveToPoint(20.183,46.504,1300,{.forwards=false,.maxSpeed=80,.minSpeed=20},false);
+	chassis.moveToPoint(20.183,46.404,1300,{.forwards=false,.maxSpeed=80,.minSpeed=20},false);
 	resetposition(true,true,true);
 	master.rumble("..");
 }
-void gotoloader3(){
+void gotoparkingzone(){
 	descore(Descore::WINGS_EXTEND);
-	chassis.moveToPoint(40.183,47.504,2000,{.forwards=true,.maxSpeed=60,.minSpeed=20},false);
-	resetposition(true,true,true);
+	chassis.moveToPoint(59.8,26.373,2000,{.forwards=true,.maxSpeed=80,.minSpeed=20},false);
 	chassis.turnToHeading(180, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
-	chassis.moveToPoint(40.183,-47.504,5000,{.forwards=true,.maxSpeed=80,.minSpeed=20},false);
-	chassis.turnToHeading(90, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	chassis.moveToPoint(59.8,10,5000,{.forwards=true,.maxSpeed=80,.minSpeed=20},false);
+	chassis.tank(50,50);
+	pros::delay(500);
+	chassis.cancelAllMotions();
 	master.rumble("..");
 
 }
@@ -397,7 +398,7 @@ void execute_skills_macro() {
 			gotoscoreloader1();
 			break;
 		case SKILLS_STEP_4:
-			gotoloader3();
+			gotoparkingzone();
 			break;
 		case SKILLS_STEP_5:
 			goscoreloader3();

@@ -3,7 +3,7 @@
 #include "robot_states.hpp"
 // 9-block autonomous routines
 void left9blocks(){
-	chassis.setPose(-46.677,14.462,90);
+	chassis.setPose(-48.677,14.462,90);
 	scoring(Scoring::HOARD);
 	chassis.turnToHeading(70, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},true);
 	chassis.moveToPoint(-17.5,25.5,2000,{.maxSpeed=80,.minSpeed=20},false);
@@ -31,7 +31,7 @@ void left9blocks(){
 }
 
 void right9blocks(){
-	chassis.setPose(-46.677,-14.462,90);
+	chassis.setPose(-87.677,-14.462,90);
 	scoring(Scoring::HOARD);
 	descore(Descore::WINGS_EXTEND);
 	chassis.turnToHeading(115, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},true);

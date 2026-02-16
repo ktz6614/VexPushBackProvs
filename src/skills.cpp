@@ -27,7 +27,7 @@ void loadloader(double x_point,double y_point){
 		loop++;} 
 
     }
-	chassis.tank(20,20);
+	chassis.tank(5,5);
 	pros::delay(500);
 
 	int timeout = 0;
@@ -42,8 +42,6 @@ void loadloader(double x_point,double y_point){
         } else {
             counter = 0;
         }
-
-
         pros::delay(20);
     }  
 }
@@ -68,7 +66,7 @@ void skills(){
 	scoring(Scoring::HOARD);
 	chassis.turnToHeading(270, 1000,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	resetposition(true, false,false);
-	loadloader(-61.826, -46.504);
+	loadloader(-61.626, -46.504);
 	chassis.moveToPoint(-45.183,-62.004,2500,{.forwards=false,.maxSpeed=100,.minSpeed=20},false);
 	matchload(Matchload::RETRACT);
 	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
@@ -96,7 +94,7 @@ void skills(){
 	chassis.turnToHeading(90, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	matchload(Matchload::EXTEND);
 	resetposition(true,true,true);
-	loadloader(61.826,46.604);
+	loadloader(62.826,46.604);
 	chassis.moveToPoint(40.183,65.004,2000,{.forwards=false,.maxSpeed=100,.minSpeed=20},false);
 	matchload(Matchload::RETRACT);
 	chassis.turnToHeading(90, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
@@ -122,6 +120,10 @@ void skills(){
 	chassis.moveToPoint(-57,17.404,1300,{.forwards=true,.maxSpeed=100,.minSpeed=20},false);
   	chassis.turnToHeading(180, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	chassis.moveToPoint(-58,0.404,2500,{.forwards=true,.maxSpeed=87},false);
+	chassis.tank(50,50);
+	pros::delay(500);
+	chassis.cancelAllMotions();
 	matchload(Matchload::EXTEND);
+
 
 }

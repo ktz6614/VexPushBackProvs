@@ -1,3 +1,3 @@
 #pragma once
-inline void left7blocks();
-inline void right7blocks();
+void left7blocks();
+void right7blocks();

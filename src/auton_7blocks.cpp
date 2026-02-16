@@ -1,4 +1,5 @@
 #include "auton_externs.hpp"
+#include "auton_7blocks.hpp"
 #include "odomreset_fixed.hpp"
 #include "robot_states.hpp"
 extern pros::Distance distLeft;

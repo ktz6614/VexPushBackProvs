@@ -1,3 +1,3 @@
 #pragma once
-inline void leftsnackyahh();
-inline void rightsawp();
+void leftsnackyahh();
+void rightsawp();
