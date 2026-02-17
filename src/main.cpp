@@ -18,9 +18,9 @@
 #include "skills.hpp"
 #include "lemlib.hpp"
 #include "odomreset_fixed.hpp"
-#define ENABLE_SKILLS_MACRO 1
-#define ENABLE_AUTON_SELCTOR 1
-#define TEST 0
+#define ENABLE_SKILLS_MACRO 0
+#define ENABLE_AUTON_SELCTOR 0
+#define TEST 1
 enum Auton {
     SKILLS,
     LEFT_9BLOCKS,
@@ -246,7 +246,7 @@ void autonomous() {
 	right_mg.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 	pros::Task displaytask(displayposition);
 	#if TEST
-	right7blocks();
+	skills();
 	#endif
  	#if ENABLE_AUTON_SELCTOR
 	switch(selected_auton){
@@ -301,21 +301,21 @@ void clear_parkingzone(){
 }
 void gotoloader1(){
 	chassis.setPose(-8.55,10.6,315);
-	chassis.moveToPoint(-40.404,43.404,2400,{.forwards=true,.maxSpeed=80,.minSpeed=50},false);
+	chassis.moveToPoint(-38.404,42.404,2300,{.forwards=true,.maxSpeed=80,.minSpeed=50},false);
 	chassis.turnToHeading(270, 600,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	resetposition(false,true,true);
 	matchload(Matchload::EXTEND);
 	master.rumble("..");
 
 }
 void gotoscoreloader1(){
 	scoring(Scoring::HOARD);
-	resetposition(false,true,true);
-	chassis.moveToPoint(-45.183,60.004,2000,{.forwards=false,.maxSpeed=120,.minSpeed=60},false);
+	chassis.moveToPoint(-45.183,62.004,2000,{.forwards=false,.maxSpeed=120,.minSpeed=60},false);
 	matchload(Matchload::RETRACT);
 	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	resetposition(false,true,true);
-	chassis.moveToPoint(42.183,59.004,2500,{.forwards=false,.maxSpeed=100,.minSpeed=5},false);
-	chassis.moveToPoint(42.183,46.504,2500,{.forwards=false,.maxSpeed=100,.minSpeed=5},false);
+	chassis.moveToPoint(42.183,62.004,2500,{.forwards=false,.maxSpeed=100,.minSpeed=5},false);
+	chassis.moveToPoint(42.183,46.504,2000,{.forwards=false,.maxSpeed=100,.minSpeed=5},false);
 	chassis.turnToHeading(90, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	resetposition(true,true,true);
 	chassis.moveToPoint(20.183,46.404,1300,{.forwards=false,.maxSpeed=80,.minSpeed=20},false);
@@ -324,11 +324,14 @@ void gotoscoreloader1(){
 }
 void gotoparkingzone(){
 	descore(Descore::WINGS_EXTEND);
-	chassis.moveToPoint(59.8,26.373,2000,{.forwards=true,.maxSpeed=80,.minSpeed=20},false);
+	scoring(Scoring::HOARD);
+	chassis.moveToPoint(63,26.373,1200,{.forwards=true,.maxSpeed=80,.minSpeed=20},false);
 	chassis.turnToHeading(180, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
-	chassis.moveToPoint(59.8,10,5000,{.forwards=true,.maxSpeed=80,.minSpeed=20},false);
-	chassis.tank(50,50);
+	chassis.moveToPoint(63,10,500,{.forwards=true,.maxSpeed=80,.minSpeed=20},false);
+	chassis.cancelAllMotions();
 	pros::delay(500);
+	chassis.tank(50,50);
+	pros::delay(3500);
 	chassis.cancelAllMotions();
 	master.rumble("..");
 
@@ -422,7 +425,6 @@ void opcontrol() {
 		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
 		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
 		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);  // Prints status of the emulated screen LCDs
-
 #if ENABLE_SKILLS_MACRO
 		// --- Right Arrow (Controller Right Button - Skills Macro Advance) ---
 		bool rightArrowPressed = master.get_digital(DIGITAL_RIGHT);
@@ -464,7 +466,7 @@ void opcontrol() {
 
 		}else if(master.get_digital(DIGITAL_UP)){
 			chassis.setPose(-21.183,46.004,270);
-			chassis.moveToPoint(-28.183,35.404,800,{.forwards=true,.maxSpeed=120,.minSpeed=20},false);
+			chassis.moveToPoint(-31.183,34.404,800,{.forwards=true,.maxSpeed=120},false);
 			chassis.turnToHeading(270, 200,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 			chassis.moveToPoint(-10.101, 35.404, 500,{.forwards=false,.maxSpeed=60},false);
 		} else {
