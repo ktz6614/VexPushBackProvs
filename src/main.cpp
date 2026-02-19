@@ -85,7 +85,7 @@ pros::Controller master(pros::E_CONTROLLER_MASTER);
 pros::MotorGroup intake_mg({7});    // Creates a motor group with forwards ports 1 & 3 and reversed port 2
 pros::MotorGroup scoring_mg({8});
 pros::MotorGroup left_mg({-13, -2,-14});  //3 Creates a motor group with forwards ports 4 & 5
-pros::MotorGroup right_mg({17, 16,19}); //21 Creates a motor group with
+pros::MotorGroup right_mg({15, 16,19}); //21 Creates a motor group with
 pros::adi::Pneumatics midgoal('H', false);
 pros::adi::Pneumatics matchloader('D',false);
 pros::adi::Pneumatics wings('G',false);
@@ -467,7 +467,7 @@ void opcontrol() {
 		}else if(master.get_digital(DIGITAL_UP)){
 			chassis.setPose(-21.183,46.004,270);
 			chassis.moveToPoint(-31.183,34.404,800,{.forwards=true,.maxSpeed=120},false);
-			chassis.turnToHeading(270, 200,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+			chassis.turnToHeading(270, 300,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 			chassis.moveToPoint(-10.101, 35.404, 500,{.forwards=false,.maxSpeed=60},false);
 		} else {
 			scoring(Scoring::NONE);

@@ -57,7 +57,7 @@ void loadloader1(double x_point,double y_point){
 	chassis.cancelAllMotions();
 	int timeout = 0;
 	int counter =0;
-    while (timeout < 80 && counter < 5) {
+    while (timeout < 80 && counter < 2) {
         timeout++;
 		setToggle();
         if (distMatchload.get_distance() >= 150) {
@@ -89,7 +89,7 @@ void skills(){
 	scoring(Scoring::HOARD);
 	chassis.turnToHeading(270, 1000,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	resetposition(true, false,false);
-	loadloader1(-61.926, -46.504);
+	loadloader(-61.926, -46.504);
 	chassis.moveToPoint(-45.183,-62.004,2500,{.forwards=false,.maxSpeed=100,.minSpeed=20},false);
 	matchload(Matchload::RETRACT);
 	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
