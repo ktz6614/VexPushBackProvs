@@ -10,25 +10,24 @@ void leftmidgoalandlong(){
 	scoring(Scoring::HOARD);
 	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	onMatchLoadReset(true,true);
-	chassis.moveToPoint(-64.926,46.404,1250,{.forwards=true,.maxSpeed=90,.minSpeed=20},false);
+	chassis.moveToPoint(-64.926,46.404,1050,{.forwards=true,.maxSpeed=90,.minSpeed=20},false);
 	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	onMatchLoadReset(true,true);
-	chassis.moveToPoint(-20.183,46.004,1300,{.forwards=false,.maxSpeed=100,.minSpeed=20},false);
+	chassis.moveToPoint(-20.183,46.004,1300,{.forwards=false,.maxSpeed=120},false);
 	onMatchLoadReset(true,true);
 	matchload(Matchload::RETRACT);
 	scoring(Scoring::LONG_GOAL);
-	pros::delay(1300);
+	pros::delay(1500);
 	scoring(Scoring::HOARD);
 	chassis.follow(leftgetblocksmidgoal_txt,10,4000,true);
 	chassis.moveToPoint(-7.55, 5.6, 1400,{.forwards=false,.maxSpeed=60,.minSpeed=20},false);
-	chassis.turnToHeading(315,800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	pros::delay(200);
 	scoring(Scoring::MID_GOAL);
 	pros::delay(1000);
 	scoring(Scoring::HOARD);
-	chassis.moveToPoint(-34.183,28.404,2600,{.forwards=true,.maxSpeed=120,.minSpeed=50},false);
+	chassis.moveToPoint(-34.183,32.404,2600,{.forwards=true,.maxSpeed=120,.minSpeed=50},false);
 	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
-	chassis.moveToPoint(-15.101, 28.404, 1000,{.forwards=false,.maxSpeed=60,.minSpeed=50},false);
+	chassis.moveToPoint(-15.101, 32.404, 1000,{.forwards=false,.maxSpeed=60,.minSpeed=50},false);
 }
 
 void rightlowgoalandlong(){

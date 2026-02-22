@@ -6,6 +6,7 @@
 #include <cstdint>
 
 extern pros::Distance distMatchload;
+extern pros::Distance distFront;
 bool ballthere=false;
 bool task_running = true;
 
@@ -68,6 +69,12 @@ void loadloader1(double x_point,double y_point){
         pros::delay(20);
     }  
 }
+void parkingzone(){
+	while(distFront.get_distance()<1600){
+		chassis.tank(50,50);
+	}
+	chassis.cancelAllMotions();
+}
 void scoreskills(double x_point,double y_point){
     chassis.moveToPoint(x_point,y_point,1000,{.maxSpeed=80});
     while(left_mg.get_actual_velocity()>5 && right_mg.get_actual_velocity()>5 ){
@@ -75,6 +82,12 @@ void scoreskills(double x_point,double y_point){
     }
 	chassis.cancelAllMotions();
 	chassis.tank(-20,-20);
+	if(scoring_mg.get_power()<9 && scoring_mg.get_power()>3){
+		scoring_mg.move(-127);
+		scoring(Scoring::OUTAKE);
+		pros::delay(100);
+		scoring(Scoring::LONG_GOAL);
+	}
 	scoring(Scoring::LONG_GOAL);
 	pros::delay(2300);
 	chassis.cancelAllMotions();
@@ -82,14 +95,14 @@ void scoreskills(double x_point,double y_point){
 }
 void skills(){
 	pros::Task antijam_task(antijam);
-	chassis.setPose(-48.79,-16.099,180);
+	/*chassis.setPose(-48.79,-16.099,180);
 	matchload(Matchload::EXTEND);
 	descore(WINGS_EXTEND);
 	chassis.moveToPoint(-48.842, -46.004,1000,{.forwards=true,.maxSpeed=70,.minSpeed=20},false);
 	scoring(Scoring::HOARD);
 	chassis.turnToHeading(270, 1000,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	resetposition(true, false,false);
-	loadloader(-61.926, -46.504);
+	loadloader(-62.926, -46.504);
 	chassis.moveToPoint(-45.183,-62.004,2500,{.forwards=false,.maxSpeed=100,.minSpeed=20},false);
 	matchload(Matchload::RETRACT);
 	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
@@ -117,7 +130,7 @@ void skills(){
 	chassis.turnToHeading(90, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	matchload(Matchload::EXTEND);
 	resetposition(true,true,true);
-	loadloader(62.826,46.604);
+	loadloader(63.826,46.604);
 	chassis.moveToPoint(40.183,65.004,2000,{.forwards=false,.maxSpeed=100,.minSpeed=20},false);
 	matchload(Matchload::RETRACT);
 	chassis.turnToHeading(90, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
@@ -140,12 +153,12 @@ void skills(){
 	matchload(Matchload::RETRACT);
 	scoring(Scoring::HOARD);
 	resetposition(false,true,true);
-	chassis.moveToPoint(-57.4,20.404,2000,{.forwards=true,.maxSpeed=100,.minSpeed=20},false);
+	descore(WINGS_EXTEND);*/
+	chassis.setPose(-20.183,46.004,270);
+	chassis.moveToPoint(-65.4,25.404,2000,{.forwards=true,.maxSpeed=100,.minSpeed=20},false);
   	chassis.turnToHeading(180, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
-	chassis.moveToPoint(-58.2,0.404,2500,{.forwards=true,.maxSpeed=87},false);
-	chassis.tank(50,50);
-	pros::delay(450);
-	chassis.cancelAllMotions();
+	chassis.moveToPoint(-65.2,0.404,2500,{.forwards=true,.maxSpeed=87},false);
+	parkingzone();
 	matchload(Matchload::EXTEND);
 
 
