@@ -18,9 +18,12 @@
 #include "skills.hpp"
 #include "lemlib.hpp"
 #include "odomreset_fixed.hpp"
-#define ENABLE_SKILLS_MACRO 1
+#define ENABLE_SKILLS_MACRO 0
 #define ENABLE_AUTON_SELCTOR 0
 #define TEST 1
+ASSET(wingmacro_txt);
+ASSET(wingmacro2_txt);
+ASSET(wingmacro3_txt);
 enum Auton {
     SKILLS,
     LEFT_9BLOCKS,
@@ -84,7 +87,7 @@ void on_center_button() {
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 pros::MotorGroup intake_mg({7});    // Creates a motor group with forwards ports 1 & 3 and reversed port 2
 pros::MotorGroup scoring_mg({8});
-pros::MotorGroup left_mg({-13, -2,-14});  //3 Creates a motor group with forwards ports 4 & 5
+pros::MotorGroup left_mg({-20, -2,-14});  //3 Creates a motor group with forwards ports 4 & 5
 pros::MotorGroup right_mg({15, 16,19}); //21 Creates a motor group with
 pros::adi::Pneumatics midgoal('H', false);
 pros::adi::Pneumatics matchloader('D',false);
@@ -98,7 +101,7 @@ pros::Imu imu(11);
 pros::Distance distLeft(10);
 pros::Distance distRight(9);
 pros::Distance distMatchload(18);
-pros::Distance distFront(18);
+pros::Distance distBack(17);
 void initialize() {
 	pros::lcd::initialize();
 	chassis.calibrate();
@@ -301,7 +304,7 @@ void clear_parkingzone(){
 }
 void gotoloader1(){
 	chassis.setPose(-8.55,10.6,315);
-	chassis.moveToPoint(-45.404,42.404,2300,{.forwards=true,.maxSpeed=80,.minSpeed=50},false);
+	chassis.moveToPoint(-43.404,42.404,2300,{.forwards=true,.maxSpeed=80,.minSpeed=50},false);
 	chassis.turnToHeading(270, 600,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	resetposition(false,true,true);
 	matchload(Matchload::EXTEND);
@@ -318,36 +321,34 @@ void gotoscoreloader1(){
 	chassis.moveToPoint(42.183,46.504,1800,{.forwards=false,.maxSpeed=100,.minSpeed=5},false);
 	chassis.turnToHeading(90, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	resetposition(true,true,true);
-	chassis.moveToPoint(20.183,46.404,1300,{.forwards=false,.maxSpeed=80,.minSpeed=20},false);
+	chassis.moveToPoint(20.183,46.004,1300,{.forwards=false,.maxSpeed=80,.minSpeed=20},false);
 	resetposition(true,true,true);
 	master.rumble("..");
 }
-void gotoparkingzone(){
+void gotoloader3 (){
 	descore(Descore::WINGS_EXTEND);
 	scoring(Scoring::HOARD);
-	chassis.moveToPoint(63,26.373,1200,{.forwards=true,.maxSpeed=80,.minSpeed=20},false);
+	chassis.moveToPoint(38.183,47.504,1000,{.forwards=true,.maxSpeed=60},false);
+	resetposition(true,true,true);
 	chassis.turnToHeading(180, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
-	chassis.moveToPoint(63,10,500,{.forwards=true,.maxSpeed=80,.minSpeed=20},false);
-	chassis.cancelAllMotions();
-	pros::delay(500);
-	chassis.tank(75,75);
-	pros::delay(3500);
-	chassis.cancelAllMotions();
+	chassis.moveToPoint(38.183,-46.504,5000,{.forwards=true,.maxSpeed=80,.minSpeed=20},false);
+	chassis.turnToHeading(90, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	resetposition(false,false,false);
 	master.rumble("..");
 
 }
 void goscoreloader3(){
 	scoring(Scoring::HOARD);
 	resetposition(false,false,false);
-	chassis.moveToPoint(45.183,-65.004,2500,{.forwards=false,.maxSpeed=120,.minSpeed=20},false);
+	chassis.moveToPoint(45.183,-65.004,2000,{.forwards=false,.maxSpeed=120,.minSpeed=20},false);
 	resetposition(false,false,false);
 	matchload(Matchload::RETRACT);
 	chassis.turnToHeading(90, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	chassis.moveToPoint(-42.183,-65.004,2500,{.forwards=false,.maxSpeed=100,.minSpeed=5},false);
-	chassis.moveToPoint(-42.183,-53.504,2500,{.forwards=false,.maxSpeed=100,.minSpeed=5},false);
+	chassis.moveToPoint(-42.183,-46.504,2500,{.forwards=false,.maxSpeed=100,.minSpeed=5},false);
 	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	resetposition(true,false,false);
-	chassis.moveToPoint(-20.183,-53.904,1300,{.forwards=false,.maxSpeed=80,.minSpeed=20},false);
+	chassis.moveToPoint(-20.183,-46.904,1300,{.forwards=false,.maxSpeed=80,.minSpeed=20},false);
 	resetposition(true,false,false);
 	master.rumble("..");
 
@@ -401,7 +402,7 @@ void execute_skills_macro() {
 			gotoscoreloader1();
 			break;
 		case SKILLS_STEP_4:
-			gotoparkingzone();
+			gotoloader3();
 			break;
 		case SKILLS_STEP_5:
 			goscoreloader3();
@@ -413,7 +414,16 @@ void execute_skills_macro() {
 	}
 }
 #endif
+void displayVelocityController() {
+    while (true) {
+        double leftVel = left_mg.get_actual_velocity();
+        double rightVel = right_mg.get_actual_velocity();
 
+        master.print(0, 0, "L: %.1f R: %.1f   ", leftVel, rightVel);
+
+        pros::delay(500);
+    }
+}
 void opcontrol() {
 	bool prevY = false;
 	bool prevA = false;
@@ -448,12 +458,13 @@ void opcontrol() {
 		}
 		prevRightArrow = rightArrowPressed;
 #endif
-		
+
 		// Arcade control scheme
 		int dir = 0.95*master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
 		int turn = 0.5*master.get_analog(ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
 		left_mg.move(dir + turn);                      // Sets left motor voltage
-		right_mg.move(dir - turn);                     // Sets right motor voltage
+		right_mg.move(dir - turn);
+                    // Sets right motor voltage
 		if (master.get_digital(DIGITAL_R1)) {
 			scoring(Scoring::HOARD);
 		} else if (master.get_digital(DIGITAL_R2)) {
@@ -466,11 +477,18 @@ void opcontrol() {
 
 		}else if(master.get_digital(DIGITAL_UP)){
 			chassis.setPose(-21.183,46.004,270);
-			chassis.moveToPoint(-26,46.004,400,{.forwards=true,.maxSpeed=120},false);
-			chassis.moveToPoint(-31.183,32.404,800,{.forwards=true,.maxSpeed=120},false);
-			chassis.turnToHeading(270, 300,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
-			chassis.moveToPoint(-10.101, 34.404, 500,{.forwards=false,.maxSpeed=60},false);
-		} else {
+			chassis.moveToPoint(-35, 46.004,300,{.maxSpeed=120},true);
+			chassis.moveToPoint(-30.405, 32.495,600,{.forwards=false,.maxSpeed=100},false);
+			chassis.turnToHeading(270, 300,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100});
+			chassis.moveToPoint(-10.101, 32.404, 500,{.forwards=false,.maxSpeed=60});
+		} else if (master.get_digital(DIGITAL_DOWN)){
+			chassis.setPose(-21.183,46.004,270);
+			chassis.moveToPoint(-35, 46.004,300,{.maxSpeed=100},false);
+			chassis.moveToPoint(-30.405, 57.495,800,{.forwards=true,.maxSpeed=100},false);
+			chassis.turnToHeading(90, 300,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100});
+			chassis.moveToPoint(-10.101, 57.404, 500,{.forwards=true,.maxSpeed=60});
+		}
+			else {
 			scoring(Scoring::NONE);
 		}
 		bool xPressed = master.get_digital(pros::E_CONTROLLER_DIGITAL_X);

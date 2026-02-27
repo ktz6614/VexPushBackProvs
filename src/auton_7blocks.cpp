@@ -1,6 +1,7 @@
 #include "auton_externs.hpp"
 #include "auton_7blocks.hpp"
 #include "odomreset_fixed.hpp"
+#include "pros/rtos.hpp"
 #include "robot_states.hpp"
 extern pros::Distance distLeft;
 extern pros::Distance distRight;
@@ -8,48 +9,54 @@ extern pros::Controller master;
 
 // 7-block autonomous routines
 void left7blocks(){
+	pros::Task antijam_task(antijam);
 	chassis.setPose(-46.677,14.462,90);
 	scoring(Scoring::HOARD);
-	chassis.turnToHeading(75, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
-	chassis.moveToPoint(-16.5,24.5,1400,{.maxSpeed=50},false);
+	chassis.turnToHeading(75, 300,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	chassis.moveToPoint(-16.5,24.5,1400,{.maxSpeed=50},true);
+	pros::delay(800);
 	matchload(Matchload::EXTEND);
-	chassis.turnToHeading(315,800,{.maxSpeed=100},false);
-	chassis.moveToPoint(-40.447,46.404,2000,{.maxSpeed=120,.minSpeed=10},false);
-	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	chassis.turnToHeading(315,800,{.maxSpeed=120},false);
+	chassis.moveToPoint(-40.447,47.404,2000,{.maxSpeed=120},false);
+	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=120},false);
 	resetposition(false,true,true);
 	chassis.moveToPoint(-62.926,47.404,1550,{.forwards=true,.maxSpeed=120},false);
 	resetposition(false,true,true);
-	chassis.moveToPoint(-21.183,46.404,1500,{.forwards=false,.maxSpeed=60},false);
+	chassis.moveToPoint(-21.183,46.404,1500,{.forwards=false,.maxSpeed=120},false);
 	scoring(Scoring::LONG_GOAL);
 	pros::delay(2200);
 	scoring(Scoring::NONE);
 	resetposition(false,true,true);
-	chassis.moveToPoint(-35.183,34.404,700,{.forwards=true,.maxSpeed=120,.minSpeed=20},false);
+	chassis.moveToPoint(-40.183,37.404,1000,{.forwards=true,.maxSpeed=120,.minSpeed=20},false);
 	matchload(Matchload::RETRACT);
 	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
-	chassis.moveToPoint(-10.101, 35.404, 1000,{.forwards=false,.maxSpeed=60},false);
+	chassis.moveToPoint(-10.101, 37.404, 1000,{.forwards=false,.maxSpeed=60},false);
+	antijam_task.remove();
 }
 
 void right7blocks(){
+	pros::Task antijam_task(antijam);
 	chassis.setPose(-46.677,-14.462,90);
 	scoring(Scoring::HOARD);
-	chassis.turnToHeading(115, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
-	chassis.moveToPoint(-17.5,-26.5,1400,{.maxSpeed=50},false);
+	chassis.turnToHeading(115, 300,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=120},false);
+	chassis.moveToPoint(-17.7,-27.5,1300,{.maxSpeed=50},true);
+	pros::delay(800);
 	matchload(Matchload::EXTEND);
-	chassis.turnToHeading(225,800,{.maxSpeed=100},false);
-	chassis.moveToPoint(-35.447,-46.404,2000,{.maxSpeed=100,.minSpeed=50},false);
-	chassis.turnToHeading(270, 1000,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	chassis.turnToHeading(225,800,{.maxSpeed=120},false);
+	chassis.moveToPoint(-38.447,-47.404,1300,{.maxSpeed=127},false);
+	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=120},false);
 	scoring(Scoring::HOARD);
 	resetposition(true,false,false);
-	chassis.moveToPoint(-57.926,-46.404,1800,{.forwards=true,.maxSpeed=120,.minSpeed=50},false);
+	chassis.moveToPoint(-60.926,-46.404,1800,{.forwards=true,.maxSpeed=120},false);
 	resetposition(true,false,false);
-	chassis.moveToPoint(-21.183,-46.404,1500,{.forwards=false,.maxSpeed=80,.minSpeed=50},false);
+	chassis.moveToPoint(-21.183,-46.404,1500,{.forwards=false,.maxSpeed=120},false);
 	scoring(Scoring::LONG_GOAL);
 	matchload(Matchload::RETRACT);
 	pros::delay(2200);
 	scoring(Scoring::NONE);
 	resetposition(true,false,false);
-	chassis.moveToPoint(-34.183,-57.604,650,{.forwards=true,.maxSpeed=120,.minSpeed=50},false);
+	chassis.moveToPoint(-34.183,-59.604,650,{.forwards=true,.maxSpeed=120},false);
 	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
-	chassis.moveToPoint(-10.101, -57.604, 1000,{.forwards=false,.maxSpeed=60,.minSpeed=50},false);
+	chassis.moveToPoint(-10.101, -57.604, 1000,{.forwards=false,.maxSpeed=60},false);
+	antijam_task.remove();
 }
