@@ -26,7 +26,7 @@ inline void setScoreLong() {
 
 inline void setScoreMid() {
     midgoal.extend();
-    intake_mg.move(100);
+    intake_mg.move(80);
     scoring_mg.move(60);
 }
 inline void setScoreHoard() {

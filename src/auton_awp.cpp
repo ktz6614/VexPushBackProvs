@@ -43,7 +43,7 @@ void rightsawp(){
 	matchload(Matchload::EXTEND);
 	chassis.moveToPoint(-65.926,47.004,1200,{.forwards=true,.maxSpeed=127,.minSpeed=20},false);
 	resetposition(false,true,true);
-	chassis.moveToPoint(-21.183,46.404,1000,{.forwards=false,.maxSpeed=127,.minSpeed=20},false);
+	chassis.moveToPoint(-21.183,47.404,1000,{.forwards=false,.maxSpeed=127,.minSpeed=20},false);
 	scoring(Scoring::LONG_GOAL);
 	pros::delay(1200);
 	resetposition(false,true,true);

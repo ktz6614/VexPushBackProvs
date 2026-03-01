@@ -36,7 +36,7 @@ enum Auton {
     RIGHT_SAW_P
 };
 
-Auton selected_auton = SKILLS;
+Auton selected_auton = LEFT_SNACKYAHH;
 
 enum Screen { MAIN, SIDE, PROGRAM };
 

@@ -1,4 +1,5 @@
 #include "auton_externs.hpp"
+#include "lemlib/chassis/chassis.hpp"
 #include "odomreset_fixed.hpp"
 #include "pros/distance.hpp"
 #include "pros/rtos.hpp"
@@ -69,9 +70,17 @@ void loadloader1(double x_point,double y_point){
         pros::delay(20);
     }  
 }
+void clearpark(){
+	chassis.swingToHeading(180, lemlib::DriveSide::LEFT,1000,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	setToggle();
+	setToggle();
+	setToggle();
+	chassis.cancelAllMotions();
+
+}
 void park(){
-	while(distBack.get_distance()<1600){
-		chassis.tank(50,50);
+		while(distBack.get_distance()<1600){
+		chassis.tank(70,70);
 		master.print(0,0,"%.2f",distBack.get_distance());
 	}
 	chassis.cancelAllMotions();
@@ -94,6 +103,25 @@ void scoreskills(double x_point,double y_point){
 	chassis.cancelAllMotions();
 	scoring(Scoring::HOARD);
 }
+void parkfront(){
+	chassis.moveToPoint(-38.183,46.004,500,{.forwards=true,.maxSpeed=120},false);
+	chassis.turnToHeading(180, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	chassis.moveToPoint(-38.183,0,1300,{.forwards=true,.maxSpeed=120},false);
+	chassis.turnToHeading(270,800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	scoring(Scoring::LONG_GOAL);
+	chassis.moveToPoint(-70, 0, 1000,{.forwards=true,.maxSpeed=120,.minSpeed=100},false);
+	clearpark();
+}
+void parkside(){
+	chassis.moveToPoint(-66.4,25.404,2000,{.forwards=true,.maxSpeed=100,.minSpeed=20},false);
+  	chassis.turnToHeading(180, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
+	chassis.moveToPoint(-65.2,17.404,1000,{.forwards=true,.maxSpeed=87},false);
+	matchload(Matchload::EXTEND);
+	chassis.tank(70,70);
+	pros::delay(200);
+	chassis.cancelAllMotions();
+	park();
+}
 void skills(){
 	pros::Task antijam_task(antijam);
 	chassis.setPose(-48.79,-16.099,180);
@@ -103,7 +131,8 @@ void skills(){
 	scoring(Scoring::HOARD);
 	chassis.turnToHeading(270, 1000,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	resetposition(true, false,false);
-	loadloader(-62.926, -46.504);
+	loadloader(-63.926, -46.504);
+	setToggle();
 	chassis.moveToPoint(-45.183,-62.004,2500,{.forwards=false,.maxSpeed=100,.minSpeed=20},false);
 	matchload(Matchload::RETRACT);
 	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
@@ -112,7 +141,7 @@ void skills(){
 	chassis.moveToPoint(45.183,-46.504,2000,{.forwards=false,.maxSpeed=100,.minSpeed=5},false);
 	chassis.turnToHeading(90, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	resetposition(false,false,false);
-	chassis.moveToPoint(20.183,-46.904,1300,{.forwards=false,.maxSpeed=80,.minSpeed=20},false);
+	chassis.moveToPoint(20.183,-46.304,1300,{.forwards=false,.maxSpeed=80,.minSpeed=20},false);
 	scoring(Scoring::LONG_GOAL);
 	pros::delay(2300);
 	scoring(Scoring::HOARD);
@@ -138,7 +167,7 @@ void skills(){
 	chassis.turnToHeading(90, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	resetposition(true,true,true);
 	chassis.moveToPoint(-40.183,62.004,2500,{.forwards=false,.maxSpeed=120,.minSpeed=5},false);
-	chassis.moveToPoint(-45.183,46.504,2000,{.forwards=false,.maxSpeed=100,.minSpeed=5},false);
+	chassis.moveToPoint(-45.183,46.504,1800,{.forwards=false,.maxSpeed=100,.minSpeed=5},false);
 	chassis.turnToHeading(270, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
 	resetposition(false,true,true);
 	chassis.moveToPoint(-20.183,45.904,1300,{.forwards=false,.maxSpeed=80,.minSpeed=20},false);
@@ -147,19 +176,14 @@ void skills(){
 	scoring(Scoring::HOARD);
 	matchload(Matchload::EXTEND);
 	resetposition(false,true,true);
-	loadloader(-61.026,46.904);
+	loadloader(-61.026,46.404);
 	matchload(Matchload::MATCHLOADING);
-	chassis.moveToPoint(-20.183,46.004,1300,{.forwards=false,.maxSpeed=120},false);
+	chassis.moveToPoint(-20.183,46.204,1300,{.forwards=false,.maxSpeed=120},false);
 	scoring(Scoring::LONG_GOAL);
 	pros::delay(2300);
 	matchload(Matchload::RETRACT);
 	scoring(Scoring::HOARD);
 	resetposition(false,true,true);
 	descore(WINGS_EXTEND);
-	chassis.moveToPoint(-38.183,46.004,500,{.forwards=true,.maxSpeed=120},false);
-	chassis.turnToHeading(180, 800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
-	chassis.moveToPoint(-38.183,0,1300,{.forwards=true,.maxSpeed=120},false);
-	chassis.turnToHeading(270,800,{.direction=lemlib::AngularDirection::AUTO,.maxSpeed=100},false);
-	chassis.moveToPoint(-70, 0, 1000,{.forwards=true,.maxSpeed=120,.minSpeed=100},false);
-	chassis.tank(100,100);
-}
+	parkfront();
+	}
